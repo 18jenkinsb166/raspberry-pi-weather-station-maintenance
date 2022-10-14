@@ -4,15 +4,15 @@ let connectingOrange = "rgb(254, 141, 2)";
 let connectedGreen = "rgb(4, 167, 40)"
 let disconnectedRed = "rgb(205, 25, 50)"
 let firstLoad = true
-
+    //  testing 1, 2, 3 
 let timeBeforeInactive = 6 // hour 
 
 
 window.addEventListener('load', function() {
     get_all_json_data()
         // henry add
-        .then(function(data){
-            if(data.length === 0){
+        .then(function(data) {
+            if (data.length === 0) {
                 alert("data endpoint gives empty array");
             }
             load_page(data)
