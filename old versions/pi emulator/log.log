@@ -1,7 +1,0 @@
-2022-06-27 17:58:33,981 - pi.py - INFO - this logger named pi.py created
-2022-06-27 17:58:33,981 - pi.py - INFO - using secret key:   ABC1**********************-key
-2022-06-27 17:58:33,982 - pi.py - INFO - using server url:   http://127.0.0.1:5000/data
-2022-06-27 17:58:33,982 - pi.py - INFO - using sample data:   {'pressure': 7.814788207943283, 'temperature': 1.7198192933582568, 'humidity': 25.873326578691646, 'wind_speed': 10.676226536128755, 'wind_direction': 20.85830476885686, 'precipitation': 29.52828244845759}
-2022-06-27 17:58:33,982 - pi.py - INFO - data about to be sent in post request:   {'secret_key': 'ABC123-this-is-a-pi-secret-key', 'new_data_item': {'pressure': 7.814788207943283, 'temperature': 1.7198192933582568, 'humidity': 25.873326578691646, 'wind_speed': 10.676226536128755, 'wind_direction': 20.85830476885686, 'precipitation': 29.52828244845759}}
-2022-06-27 17:58:34,025 - pi.py - CRITICAL - status code was not 200
-2022-06-27 17:58:34,026 - pi.py - CRITICAL - 500 internal server error, perhaps flask server has crashed

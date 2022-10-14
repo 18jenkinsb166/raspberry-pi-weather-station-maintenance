@@ -1,6 +1,0 @@
-2022-04-26 12:53:57,313 - server.py - INFO - this logger named server.py created
-2022-04-26 12:53:57,314 - server.py - INFO - fetched secret key hash: e06bad9f8dc27e08f1f568daed0d3ed33c8cbeb42289f17dabc03d89398c5e9e
-2022-04-26 12:53:57,315 - server.py - INFO - Using port 80
-2022-04-26 12:53:57,318 - server.py - INFO - flask app object created
-2022-04-26 12:53:57,320 - server.py - INFO - all flask routes defined
-2022-04-26 12:53:57,322 - server.py - INFO - appending data item  {'rain': 0.67, 'light': 0.45} to data store

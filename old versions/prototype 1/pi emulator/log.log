@@ -1,8 +1,0 @@
-2022-03-02 19:02:50,771 - pi.py - INFO - this logger named pi.py created
-2022-03-02 19:02:50,771 - pi.py - INFO - using secret key:   ABC1**********************-key
-2022-03-02 19:02:50,772 - pi.py - INFO - using server url:   http://127.0.0.1:5000/data
-2022-03-02 19:02:50,772 - pi.py - INFO - using sample data:   {'light': 15, 'rain': 76}
-2022-03-02 19:02:50,772 - pi.py - INFO - data about to be sent in post request:   {'secret_key': 'ABC123-this-is-a-pi-secret-key', 'new_data_item': {'light': 15, 'rain': 76}}
-2022-03-02 19:02:50,793 - pi.py - INFO - Post request successfull
-2022-03-02 19:02:50,793 - pi.py - INFO - request status code:   200
-2022-03-02 19:02:50,793 - pi.py - INFO - returned text (first 250 characters):   [{"light": 56, "rain": 23}, {"light": 89, "rain": 2}, {"light": 23, "rain": 82}, {"light": 41, "rain": 44}, {"light": 25, "rain": 56}, {"light": 16, "rain": 60}, {"light": 93, "rain": 19}, {"light": 37, "rain": 49}, {"light": 4, "rain": 83}, {"light"

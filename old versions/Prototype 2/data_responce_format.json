@@ -1,6 +1,0 @@
-[
-    {"time_stamp": "yyyy-mm-dd hh:mm:ss", "pressure": 50, "temperature": 12, "humidity": 0.64, "wind_speed": 12, "wind_direction": 165, "precipitation": 15, "day_type": "cold"},
-    {"time_stamp": "yyyy-mm-dd hh:mm:ss", "pressure": 50, "temperature": 12, "humidity": 0.64, "wind_speed": 12, "wind_direction": 165, "precipitation": 15, "day_type": "cold"},
-    {"time_stamp": "yyyy-mm-dd hh:mm:ss", "pressure": 50, "temperature": 12, "humidity": 0.64, "wind_speed": 12, "wind_direction": 165, "precipitation": 15, "day_type": "cold"},
-    {"time_stamp": "yyyy-mm-dd hh:mm:ss", "pressure": 50, "temperature": 12, "humidity": 0.64, "wind_speed": 12, "wind_direction": 165, "precipitation": 15, "day_type": "cold"}
-]
