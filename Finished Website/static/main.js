@@ -1,30 +1,31 @@
-let boldBlack = "rgba(0,0,0,1)";
-let faintBlack = "rgba(0,0,0,0.2)";
-let connectingOrange = "rgb(254, 141, 2)";
-let connectedGreen = "rgb(4, 167, 40)"
-let disconnectedRed = "rgb(205, 25, 50)"
-let firstLoad = true
-    //  testing 1, 2, 3 
-let timeBeforeInactive = 6 // hour 
+let connectingOrange = "rgb(254, 141, 2)"; // colour of the dot on the first page whilst connecting
+let connectedGreen = "rgb(4, 167, 40)" // colour of the dot on the first page if connected
+let disconnectedRed = "rgb(205, 25, 50)" // colour of the dot on the first page if not connected 
+let timeBeforeInactive = 6 // this is used to determine if the server is connected. Time in hours at which it determines that the server is offline.
+
+// "python server/server.py" put in terminal without speech marks - make sure that your root directory is correct
+// website runs on local host... go here: http://127.0.0.1:5000/
 
 
+// the main function that is run when the webpage has loaded
 window.addEventListener('load', function() {
-    get_all_json_data()
-        // henry add
+    get_all_json_data() // calls the function - function is written at the bottom 
+        // it is called as a promise, and the ".then" block of code runs when the data has been returned. 
         .then(function(data) {
-            if (data.length === 0) {
-                alert("data endpoint gives empty array");
-            }
-            load_page(data)
+            load_page(data) // calls the function load page 
         })
-
-    $(window).resize(resizeFunc());
+    window.addEventListener("resize", resizeFunc);
+    // this is an event listener. The function - resizeFunc is called any time the window is resized
+    // this is so that we can check if the screen size is too small, and the error needs to be shown. 
 });
 
-window.addEventListener("resize", resizeFunc);
 
+
+// main function that gets called when page is loaded. 
+// the full set of json data stored on the pi is passed as an argument 
 function load_page(jsondata) {
 
+    // empty arrays for the data
     let tempData = []
     let rainData = []
     let pressureData = []
@@ -32,15 +33,18 @@ function load_page(jsondata) {
     let humidityData = []
     let windDirectionData = []
 
+    // empty arrays for the time stamps
     let timeStampData = []
 
+    // iterates through each reading of the data set and runs through the for loop with "dataset" as the variable 
+    // that takes the value of each reading
     jsondata.forEach(dataset => {
-        tempData.push(dataset['temperature'].toFixed(1))
-        rainData.push(dataset['precipitation'].toFixed(2))
-        pressureData.push(Math.round(dataset['pressure']))
-        windSpeedData.push(Math.round(dataset['wind_speed']))
-        humidityData.push(Math.round(dataset['humidity']))
-        windDirectionData.push(Math.round(dataset["wind_direction"]))
+        tempData.push(dataset['temperature'].toFixed(1)) // rounds to 1dp
+        rainData.push(dataset['precipitation'].toFixed(2)) // rounds to 2dp 
+        pressureData.push(Math.round(dataset['pressure'])) // rounds to nearest integer
+        windSpeedData.push(Math.round(dataset['wind_speed'])) // rounds to nearest integer
+        humidityData.push(Math.round(dataset['humidity'])) // rounds to nearest integer
+        windDirectionData.push(Math.round(dataset["wind_direction"])) // rounds to nearest integer
         timeStampData.push(dataset["timestamp"])
     });
 
@@ -135,11 +139,6 @@ class Graph {
             this.timeStamps = timestamps
             this.unit = unit;
             this.xlabels = this.createXlabels(timestamps)
-                // if (firstLoad == true) {
-                //     this.initialiseGraph(unit)
-                //     firstLoad = false
-                // }
-
 
             this.initialiseGraph(unit)
 
