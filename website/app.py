@@ -1,3 +1,5 @@
+# This file is part of the way to run the project. It contains no logic
+
 from server import server
 
 FLASK_APP = server.app
