@@ -1,5 +1,2 @@
 # raspberry-pi-weather-station
-This is the Raspberry Pi Weather Station project's GitHub page. Here we have all of the hardware scripts, server and website versions as well as some of our debugging/testing scripts.
-
-'Finished Website' holds all the code/files for the website
-'Hardware Scripts/Integrated' holds the final version of the code running on the Raspberry Pi
+This is the maintenance team fork Raspberry Pi Weather Station project. Contains all the current hardware scripts, server and website - for older versions and peripheral code see the original repository... https://github.com/henry-oldroyd/raspberry-pi-weather-station 
