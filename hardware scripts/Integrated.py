@@ -9,10 +9,10 @@ import logging
 import os
 
 #Import files to use
-import Ann16 as Ann
-import BME8 as BME
-import Rain17 as Rain
-import Wind15 as Wind
+import Ann as Ann
+import BME as BME
+import Rain as Rain
+import Wind as Wind
 import logger as logger_module #For logging
 
 #Logger Setup
@@ -24,8 +24,9 @@ logger_module.setup_logger(os.path.basename(__file__) + " - Backend Logger")
 loggerBack = logging.getLogger(os.path.basename(__file__) + " - Backend Logger")
 
 #Server setup
-SERVER_URL = 'http://172.20.47.242:80/data'
+SERVER_URL = 'http://172.20.47.242:80/data' # Change to match /data endpoint of URL
 
+#Reads secret key
 with open("secret_key.key", "r") as file:
     SECRET_KEY = file.read()
 
@@ -34,8 +35,8 @@ output_safe_secret_key = SECRET_KEY[:4] + "*"*(len(SECRET_KEY)-8) + SECRET_KEY[-
 loggerBack.info(f"using secret key:   {output_safe_secret_key}")
 loggerBack.info(f"using server url:   {SERVER_URL}")
 
-
-def floatCheck(checkMe): #Ensures all values have been calculated as floats (i.e. all valid) - if not defaults to 0
+#Ensures all values have been calculated as floats (i.e. all valid) - if not defaults to 0
+def floatCheck(checkMe):
     try:
         checkMe = float(checkMe)
     except ValueError:
@@ -43,8 +44,9 @@ def floatCheck(checkMe): #Ensures all values have been calculated as floats (i.e
         checkMe = 0
     return checkMe
         
-
+#Sends readings to server
 def send_reading(pressure, temperature, humidity, wind_speed, wind_direction, precipitation):
+    #Creates dictionary of all values to send
     readingData = {
         'pressure': pressure,
         'temperature': temperature,
@@ -55,14 +57,17 @@ def send_reading(pressure, temperature, humidity, wind_speed, wind_direction, pr
     }
     loggerBack.info(f"data about to be sent in post request:   {readingData}")
 
-    payload = {"secret_key": SECRET_KEY, "new_data_item": readingData}
+    payload = {"secret_key": SECRET_KEY, "new_data_item": readingData} 
 
+    # Tries to send data to server
     try:
         request = requests.post(SERVER_URL, json=payload)
         assert request.status_code == 200, f"Status code was not 200 success but was  {request.status_code}"
     except Exception as e:
         print("ERROR:")
         print(e)
+
+        #Tries to identify type of error
         try:
                 if request.status_code == 404:
                         loggerBack.critical('404 page not found')
