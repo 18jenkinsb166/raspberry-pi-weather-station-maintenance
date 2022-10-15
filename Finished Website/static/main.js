@@ -144,42 +144,51 @@ class Dataset {
 }
 
 // OOP - for the big graph on the second page 
-// this is because each time 
 class Graph {
+    // constructor class is called when an object of the class is intialised 
     constructor(title, id, data, timestamps, unit, rgbaFront, rgbaBack, slider_on = false) {
-            this.title = title
-            this.backgroundColour = rgbaFront
-            this.colour = rgbaFront
-            this.borderColour = rgbaBack
+            this.title = title // graph title 
+            this.colour = rgbaFront // main colour of the graph 
             this.ctx = document.getElementById(id).getContext('2d')
-            this.data = data;
-            this.dataBeingUsed = this.data
-            this.timeStamps = timestamps
-            this.unit = unit;
-            this.xlabels = this.createXlabels(timestamps)
+            this.backgroundColor = rgbaBack; // back colour of the line 
+            this.data = data; // array for ALL the data 
+            this.dataBeingUsed = this.data // specifically the subset of this.data representing the data currently being shown
+            this.timeStamps = timestamps // array of the time stamps
+            this.unit = unit; // unit for the graph 
+            this.xlabels = this.createXlabels(timestamps) // function call that creates the x axis labels for the graph 
+            this.defaultSliderValue = 5; // the value that the slider below the graph is set to by default - upon loading page
 
-            this.initialiseGraph(unit)
+            this.initialiseGraph(unit) // function call - creates the graph 
 
+            // creates slider below graph - function call 
             if (slider_on == true) {
                 this.initialiseSlider();
             }
 
 
+
         }
         // creates slider below graph 
     initialiseSlider() {
-        this.sliders = document.getElementsByClassName("slider-big-graph"); // only lets you take as a list
-        this.slider = this.sliders[0] // one element array
-        this.slider.max = this.data.length;
-        if (this.data.length >= 5) {
-            this.slider.value = 5;
+        this.sliders = document.getElementsByClassName("slider-big-graph"); // returns one element array of the slider div from html
+        this.slider = this.sliders[0] // turns array into variable
+        this.slider.max = this.data.length; // sets the max value of the slider to the length of the data
+        // makes sure that we have at least defualt size data readings 
+        if (this.data.length >= this.defaultSliderValue) {
+            // sets the defeault slider value to default value 
+            this.slider.value = this.defaultSliderValue;
         };
 
+        // adds event listener to slider
+        // when the slider is clicked/ moved - editDisplayData function is called 
         this.slider.addEventListener("input", () => { this.editDisplayData() });
+        // calls editDisplayData intially, to make sure it's set up right 
         this.editDisplayData();
     }
 
-    //  creates the graph 
+    //  creates the graph - see chart.js for documentation
+    // this is an API 
+    // https://www.chartjs.org
     initialiseGraph(unit) {
         this.chart = new Chart(this.ctx, {
                 type: 'line',
@@ -188,10 +197,9 @@ class Graph {
                     datasets: [{
                         label: this.title,
                         data: this.dataBeingUsed,
-                        backgroundColor: this.backgroundColour,
                         color: this.colour,
-                        borderColor: this.borderColour,
                         fill: false,
+                        backgroundColor: this.backgroundColor;
 
                     }]
                 },
@@ -331,7 +339,6 @@ function dropdownFunctionality(value, bigGraph, jsondata, fgColour, bgColour) {
         dataset.label = value; // changes the title
         dataset.backgroundColor = fgColour
         dataset.color = fgColour
-        dataset.borderColor = bgColour
     })
 
     bigGraph.data = newdata;
