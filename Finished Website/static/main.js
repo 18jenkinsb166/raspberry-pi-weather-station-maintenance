@@ -210,7 +210,7 @@ class Graph {
                             ticks: {
                                 autoSkip: true,
                                 callback: function(value, index, ticks) {
-                                    return value + " " + unit;
+                                    return value + " " + unit; // adds a space between unit and value - does this for all of them
                                 }
 
                             }
@@ -230,8 +230,7 @@ class Graph {
 
     // adds the dates to the x axis of the graph 
     createXlabels() {
-        // neeeds to be changed to show the right dates 
-        let xlabels = [] // local variable
+        let xlabels = [] // local variable to store the date labels 
         for (let dayCounter = 1; dayCounter <= this.dataBeingUsed.length; dayCounter++) {
             xlabels.push(this.timeStamps[this.timeStamps.length - dayCounter])
         }
