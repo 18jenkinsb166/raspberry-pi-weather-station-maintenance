@@ -241,6 +241,7 @@ class Graph {
 
     // uses the slider to determine how much of the data should be shown 
     editDisplayData() {
+        // val is set to the current value of the slider 
         let val = this.slider.value;
 
         // array of 10, if selected 1, we want from 9- 10 
