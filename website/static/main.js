@@ -54,14 +54,14 @@ function load_page(jsondata) {
 
 
 
-    // create readout boxes
+    // create readout boxes on the first page 
     let tempReadOutBox = new Dataset("Temperature", "°C", "readout-box-temp", tempData);
     let pressureReadOutBox = new Dataset("Pressure", "mb", "readout-box-pressure", pressureData);
     let humidityReadOutBox = new Dataset("Humidity", "%", "readout-box-humidity", humidityData);
     let rainReadOutBox = new Dataset("Rain", "mm", "readout-box-rain", rainData);
     let windSpeedReadOutBox = new Dataset("Wind Speed", "mph", "readout-box-wind", windSpeedData, windDirectionData[windDirectionData.length - 1]);
 
-    // main graph on page 3
+    // main graph on page 2
     let bigGraph = new Graph('Temp', 'graph-graph-big', tempData, timeStampData, "°C", colours[0], colours[1], true)
 
 
@@ -73,51 +73,67 @@ function load_page(jsondata) {
     let windButton = document.getElementById("wind-button-big-graph");
     let humidButton = document.getElementById("humid-button-big-graph");
 
+    // puts all buttons in a list to make them easier to work with
+    // ig it's techically an array cus size doesnt change
+    // altho if we're being really techincal JS would say it's a list 
     let buttons = [tempButton, pressureButton, rainButton, windButton, humidButton]
     page3Buttons(buttons, bigGraph, jsondata, firstCall = true); // adds functionality to each button, and the big graph 
 
-    boolConnected = isConnected(timeStampData[timeStampData.length - 1])
-    connectingButton(boolConnected)
+    // adds functionality to the connecting button on the first page 
+    boolConnected = isConnected(timeStampData[timeStampData.length - 1]) // function call 
+    connectingButton(boolConnected) // function call 
 
-    getPhotoImages();
-    lastUpdatedAt(timeStampData[timeStampData.length - 1]); // adds the "last updated" first page
+    getPhotoImages(); // function call 
+    // loads the images and puts them on the screen 
+
+    lastUpdatedAt(timeStampData[timeStampData.length - 1]); // function call adds the "last updated" first page
+    // this is the white text in the bottom left 
 
 
 
 }
 
+// class for each dataset - this is object oriented programming 
 
 class Dataset {
+    // constructor class is called when intilising object 
     constructor(title, unit, divName, data, windDirection = null) {
-        this.title = title;
-        this.unit = unit;
-        this.divName = divName;
-        this.data = data;
-        this.windDirection = windDirection;
+        this.title = title; // title of the readoutbox 
+        this.unit = unit; // unit for the data of the readout box 
+        this.divName = divName; // the name of the HTML div the readout box is in 
+        this.data = data; // the list of all data values from the json data 
+        this.windDirection = windDirection; // defaulted to null, but if wind speed, then it's passed as an extra parameter 
 
+        // calls the editReadOut function below 
         this.editReadOut();
     }
 
 
     editReadOut() {
-        this.currentData = this.data[this.data.length - 1]; // shows the first element in readout box 
-        this.div = document.getElementById(this.divName);
-        this.child = this.div.getElementsByTagName("p");
+        // makes the acc changes to the readout boxes
+        this.currentData = this.data[this.data.length - 1]; // most recent reading from the data 
+        this.div = document.getElementById(this.divName); // identifies the html div for the readoutbox 
+        this.child = this.div.getElementsByTagName("p"); // identifies the html p tag for the readout box
+
 
         // Add spacing between unit and value for some data series
+        // Also adds the correct unit to the readout box p tag
         if (this.unit == "°C" || this.unit == "%") {
             this.child[0].innerText = this.currentData + this.unit;
         } else {
             this.child[0].innerText = this.currentData + " " + this.unit;
         }
-        // getting rid of wind direction
+
+        // getting rid of wind direction - only true if we're looking at the wind box 
         if (this.windDirection != null) {
 
-
+            // adds 0s to the front of the wind bearing to make it more formal
+            // this while loop caused me a lot of pain 
             while (this.windDirection.toString().length != 3) {
                 this.windDirection = "0" + this.windDirection
             }
 
+            // adds the wind direction to the paragraph text in the readout box 
             this.child[0].innerText = this.windDirection + '° ' + this.currentData + this.unit;
 
         }
@@ -127,41 +143,52 @@ class Dataset {
 
 }
 
+// OOP - for the big graph on the second page 
 class Graph {
+    // constructor class is called when an object of the class is intialised 
     constructor(title, id, data, timestamps, unit, rgbaFront, rgbaBack, slider_on = false) {
-            this.title = title
-            this.backgroundColour = rgbaFront
-            this.colour = rgbaFront
-            this.borderColour = rgbaBack
+            this.title = title // graph title 
+            this.colour = rgbaFront // main colour of the graph 
             this.ctx = document.getElementById(id).getContext('2d')
-            this.data = data;
-            this.dataBeingUsed = this.data
-            this.timeStamps = timestamps
-            this.unit = unit;
-            this.xlabels = this.createXlabels(timestamps)
+            this.backgroundColor = rgbaBack; // back colour of the line 
+            this.data = data; // array for ALL the data 
+            this.dataBeingUsed = this.data // specifically the subset of this.data representing the data currently being shown
+            this.timeStamps = timestamps // array of the time stamps
+            this.unit = unit; // unit for the graph 
+            this.xlabels = this.createXlabels(timestamps) // function call that creates the x axis labels for the graph 
+            this.defaultSliderValue = 5; // the value that the slider below the graph is set to by default - upon loading page
 
-            this.initialiseGraph(unit)
+            this.initialiseGraph(unit) // function call - creates the graph 
 
+            // creates slider below graph - function call 
             if (slider_on == true) {
                 this.initialiseSlider();
             }
 
 
+
         }
         // creates slider below graph 
     initialiseSlider() {
-        this.sliders = document.getElementsByClassName("slider-big-graph"); // only lets you take as a list
-        this.slider = this.sliders[0] // one element array
-        this.slider.max = this.data.length;
-        if (this.data.length >= 5) {
-            this.slider.value = 5;
+        this.sliders = document.getElementsByClassName("slider-big-graph"); // returns one element array of the slider div from html
+        this.slider = this.sliders[0] // turns array into variable
+        this.slider.max = this.data.length; // sets the max value of the slider to the length of the data
+        // makes sure that we have at least defualt size data readings 
+        if (this.data.length >= this.defaultSliderValue) {
+            // sets the defeault slider value to default value 
+            this.slider.value = this.defaultSliderValue;
         };
 
+        // adds event listener to slider
+        // when the slider is clicked/ moved - editDisplayData function is called 
         this.slider.addEventListener("input", () => { this.editDisplayData() });
+        // calls editDisplayData intially, to make sure it's set up right 
         this.editDisplayData();
     }
 
-    //  creates the graph 
+    //  creates the graph - see chart.js for documentation
+    // this is an API 
+    // https://www.chartjs.org
     initialiseGraph(unit) {
         this.chart = new Chart(this.ctx, {
                 type: 'line',
@@ -170,10 +197,10 @@ class Graph {
                     datasets: [{
                         label: this.title,
                         data: this.dataBeingUsed,
-                        backgroundColor: this.backgroundColour,
-                        color: this.colour,
-                        borderColor: this.borderColour,
+                        color: this.colour, // changes the colour of the dots 
                         fill: false,
+                        backgroundColor: this.colour, // the colour of the circle in the dot on the graph 
+                        borderColor: this.backgroundColor // the colour of the line 
 
                     }]
                 },
@@ -184,20 +211,13 @@ class Graph {
                             ticks: {
                                 autoSkip: true,
                                 callback: function(value, index, ticks) {
-                                    return value + " " + unit;
+                                    return value + " " + unit; // adds a space between unit and value - does this for all of them
                                 }
 
                             }
 
                         }
                     },
-
-                    // interaction: {
-                    //     intersection: false,
-                    // },
-                    // layout: {
-                    //     padding: 50
-                    // },
                     elements: {
                         line: {
                             tension: 0
@@ -211,8 +231,7 @@ class Graph {
 
     // adds the dates to the x axis of the graph 
     createXlabels() {
-        // neeeds to be changed to show the right dates 
-        let xlabels = [] // local variable
+        let xlabels = [] // local variable to store the date labels 
         for (let dayCounter = 1; dayCounter <= this.dataBeingUsed.length; dayCounter++) {
             xlabels.push(this.timeStamps[this.timeStamps.length - dayCounter])
         }
@@ -293,6 +312,7 @@ function piImg() {
 
 // changes the graph data upon click of the dropdown 
 function dropdownFunctionality(value, bigGraph, jsondata, fgColour, bgColour) {
+
     if (value == "Temperature") {
         unit = "°C"
         filter = "temperature"
