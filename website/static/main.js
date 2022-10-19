@@ -235,6 +235,8 @@ class Graph {
         for (let dayCounter = 1; dayCounter <= this.dataBeingUsed.length; dayCounter++) {
             xlabels.push(this.timeStamps[this.timeStamps.length - dayCounter])
         }
+        // reverses the order of the data so that upon adding to the graph, it plots it in time order from left to right
+        // this is because it comes from the server with the most recent reading being the "last" element in the array
         xlabels.reverse()
         return xlabels
     }
@@ -246,21 +248,21 @@ class Graph {
 
         // array of 10, if selected 1, we want from 9- 10 
         this.dataBeingUsed = this.data.slice(this.data.length - val, this.data.length); // edits which part of data set is shwon
-        this.xlabels = this.createXlabels()
+        this.xlabels = this.createXlabels() // functiona call 
 
-        console.log(this.xlabels.length)
-        console.log(this.dataBeingUsed.length)
-
-
+        // updates the graph to put the data point on 
         this.chart.data.datasets.forEach((dataset) => {
-            dataset.data = this.dataBeingUsed;
-        })
+                dataset.data = this.dataBeingUsed;
+            })
+            // updates the x labels of the graph 
         this.chart.data.labels = this.xlabels;
+        // calls the function to update the graph 
         this.chart.update()
     }
 }
 
 async function get_all_json_data() {
+    // in built function in javascipt that requests the data 
     let response = await fetch("/data");
     let data = response.json()
     return data;
