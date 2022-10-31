@@ -269,6 +269,7 @@ async function get_all_json_data() {
 }
 
 function getPhotoImages() {
+    // calls the functions that loads the images on the website - one image per function 
     updateBGimg();
     sandringhamLogo()
     selfieImg();
@@ -277,8 +278,7 @@ function getPhotoImages() {
 
 // Update the background image to the current weather
 function updateBGimg() {
-
-
+    // at the endpoint background image and puts it to the appropriate HTML element 
     fetch(`/background_image`)
         // .then(response => console.log(response))
         .then(img => {
@@ -287,7 +287,7 @@ function updateBGimg() {
         })
 }
 
-// returns sandringham logo img and sets to div in top left 
+//  sandringham logo img and sets to div in top left 
 function sandringhamLogo() {
     fetch("/images/logo")
         .then(img => {
@@ -296,7 +296,7 @@ function sandringhamLogo() {
         })
 }
 
-// returns selfie img and sets to about section 
+//  selfie img and sets to about section 
 function selfieImg() {
     fetch("/images/selfie")
         .then(img => {
@@ -332,12 +332,13 @@ function dropdownFunctionality(value, bigGraph, jsondata, fgColour, bgColour) {
         unit = "%";
         filter = "humidity"
     }
+    // gets the appropriate data values in an array - newdata
     let newdata = [];
     jsondata.forEach(dataset => {
         newdata.push(dataset[filter])
     });
 
-
+    // edits the values in the graph, the colour, the data, and the title. 
     bigGraph.chart.data.datasets.forEach((dataset) => {
         dataset.data = newdata; // changes the data
         dataset.label = value; // changes the title
@@ -353,7 +354,7 @@ function dropdownFunctionality(value, bigGraph, jsondata, fgColour, bgColour) {
     bigGraph.chart.data.labels = this.xlabels;
     bigGraph.initialiseSlider();
     bigGraph.chart.options.scales.y.ticks.callback = function(value, index, ticks) {
-        value = value + " " + unit;
+        value = value + " " + unit; // adds a space on the y axis between unit and data value. 
         return value
     }
 
@@ -366,7 +367,7 @@ function page3Buttons(buttons, bigGraph, jsondata, firstCall = false) {
 
     buttons.forEach((button) => {
         button.addEventListener("click", () => {
-            //removes selected from all
+            //removes selected from all- styling for buttons 
             buttons.forEach((button) => {
                 button.classList.remove("selected-button")
             });
@@ -374,7 +375,7 @@ function page3Buttons(buttons, bigGraph, jsondata, firstCall = false) {
 
 
 
-            // makes the button selected
+            // makes the button selecteds
             button.classList.add("selected-button");
 
 
@@ -401,33 +402,36 @@ function lastUpdatedAt(time) {
 }
 
 function connectingButton(boolConnected) {
-    statusText = document.getElementsByClassName("status-text")[0]
-    statusDot = document.getElementsByClassName("status-dot")[0]
-    statusText.style.color = connectingOrange;
+    // functionality for the connecting button on the first page. 
+    statusText = document.getElementsByClassName("status-text")[0] // text that says "connecting..." or "online" or "offline"
+    statusDot = document.getElementsByClassName("status-dot")[0] // the actual dot itself that changes colour 
+    statusText.style.color = connectingOrange; // colour is at the top of the page as a global variable. 
     statusText.innerText = "Status: Connecting...";
-    statusDot.style.animation = "connecting-dot 2s infinite";
+    statusDot.style.animation = "connecting-dot 2s infinite"; // animation - see animation.css
 
     // set to green 
     if (boolConnected == true) {
         setTimeout(function() {
-            statusText.style.color = connectedGreen;
-            statusText.innerText = "Status: Connected";
-            statusDot.style.animation = "dot-animation 2s infinite";
-        }, 3000)
+                statusText.style.color = connectedGreen;
+                statusText.innerText = "Status: Connected";
+                statusDot.style.animation = "dot-animation 2s infinite";
+            }, 3000) // after 3 seconds it calls the connecting animation, and changes the text. 
     } else {
         setTimeout(function() {
-            statusText.style.color = disconnectedRed;
-            statusText.innerText = "Status: Offline";
-            statusDot.style.animation = "disconnected 2s infinite";
-        }, 3000)
+                statusText.style.color = disconnectedRed;
+                statusText.innerText = "Status: Offline";
+                statusDot.style.animation = "disconnected 2s infinite";
+            }, 3000) // after 3 seconds it calls the offline animation, and changes the text. 
     }
 
-    // set to red
+
 
 
 }
 
+// this function basically compares the most recent data stamp to the current date and time 
 function isConnected(recentTimeStamp) {
+
 
     // currentTimeStamp = yyyy-mm-dd hh:mm:ss eg
     let today = new Date();
@@ -453,24 +457,25 @@ function isConnected(recentTimeStamp) {
 
     if (currentYear != timeStampYear) { // compares years 
         returnVal = false;
-        console.log('years')
+
     }
     if (currentMonth != timeStampMonth) { // compares months
         returnVal = false;
-        console.log('mongth')
+
     }
     if (currentDay != timeStampDay) {
         returnVal = false;
-        console.log('DAY')
+
     }
     if (currentHours < (parseInt(timeStampHours) + parseInt(timeBeforeInactive)) % 24) { // compares hours
         returnVal = false
-        console.log('hours')
     }
+
 
     return returnVal;
 }
 
+// checks the current size of the page and then adds the styles to all the elemnts to hide everything, and only show the error message 
 function resizeFunc() {
     let all = document.getElementsByTagName("*");
     all = document.querySelectorAll("*")
@@ -495,6 +500,7 @@ function resizeFunc() {
     }
 }
 
+// returns a random HSL colour for the graph, it returns a lighter and a darker one for the colour of the dots and the colour of the line
 function returnRandomHSL() {
     let max = 360
     let hue = Math.floor(Math.random() * max)
@@ -504,8 +510,8 @@ function returnRandomHSL() {
 
 }
 
-function buttonAnimation() {
-    colours = returnRandomHSL()
+function buttonAnimation() { // buttons on the big graph page. 
+    colours = returnRandomHSL() // function call 
 
     nonSelectedButton = document.getElementsByClassName("drop-button-big-graph")
 
@@ -513,16 +519,16 @@ function buttonAnimation() {
         nonSelectedButton[i].style.background = 'linear-gradient(to right, rgba(169, 158, 158, 0.1) 50% ,' + colours[0] + ' 50%)'
         nonSelectedButton[i].style.backgroundSize = '200% 100%'
         nonSelectedButton[i].style.backgroundPosition = "left bottom"
-            // nonSelectedButton[i].style.background = 'linear-gradient(to right, #000000, #ffffff)'
 
-        nonSelectedButton[i].addEventListener('mouseover', function handleMouseOver() {
+
+        nonSelectedButton[i].addEventListener('mouseover', function handleMouseOver() { // when mouse hover over 
             if (nonSelectedButton[i].classList.contains("selected-button") == false) {
                 nonSelectedButton[i].style.transition = "all 1s ease"
                 nonSelectedButton[i].style.backgroundPosition = "right bottom"
             }
         });
 
-        nonSelectedButton[i].addEventListener('mouseout', function handleMouseOut() {
+        nonSelectedButton[i].addEventListener('mouseout', function handleMouseOut() { // when mouse leaves the button hitbox 
             if (nonSelectedButton[i].classList.contains("selected-button") == false) {
                 nonSelectedButton[i].style.background = 'linear-gradient(to right, rgba(169, 158, 158, 0.1) 50% ,' + colours[0] + ' 50%)'
                 nonSelectedButton[i].style.backgroundSize = '200% 100%'
@@ -531,7 +537,7 @@ function buttonAnimation() {
         });
     }
     selectedButton = document.getElementsByClassName("selected-button")[0]
-    selectedButton.style.backgroundColor = colours[0]
+    selectedButton.style.backgroundColor = colours[0] // changes the background colour of the button to the stronger version of the 2 random HSL colour buttons. 
 
 
     return colours
