@@ -34,12 +34,12 @@ LAST_COMMITTED_TIMESTAMP = None
 # can be changed, affects how many days of data are displayed on the webiste
 LAST_X_DAYS = 21
 
-# read key file for hashed key  
-lgr.info('setup: reading hashed key file')
-with open('./server/hashed_key.key', 'r') as file:
-    # SECRET_KEY_HASH = file.read()
-    # get rid on new line char at end
-    SECRET_KEY_HASH = file.read()[:-1]
+# # read key file for hashed key  
+# lgr.info('setup: reading hashed key file')
+# with open('./server/hashed_key.key', 'r') as file:
+#     # SECRET_KEY_HASH = file.read()
+#     # get rid on new line char at end
+#     SECRET_KEY_HASH = file.read()[:-1]
     
 
 lgr.info('setup: reading image path lookup file')
@@ -180,13 +180,13 @@ def repeat_decorator_factory(repeats:int):
     return decorator
 
 # function returns a hexadecimal string for the SHA256 hash of an object
-@print_dec
-@repeat_decorator_factory(10**3)
-def hash(plain_txt):
-    """one way hash using sha256"""
-    hash_ = hashlib.sha256()
-    hash_.update(plain_txt.encode())
-    return hash_.hexdigest()
+# @print_dec
+# @repeat_decorator_factory(10**3)
+# def hash(plain_txt):
+#     """one way hash using sha256"""
+#     hash_ = hashlib.sha256()
+#     hash_.update(plain_txt.encode())
+#     return hash_.hexdigest()
 
 # this function logic determines what the weather is approximately
 @print_dec
@@ -242,14 +242,14 @@ def get_data():
 def post_data():
     # get the data attached to the post request
     data_header = flask.request.json
-    secret_key = data_header["secret_key"]
+    # secret_key = data_header["secret_key"]
     new_reading_data: dict = data_header["new_data_item"]
     # print(new_reading_data)
     
-    # abort if the given key is invalid
-    if hash(secret_key) != SECRET_KEY_HASH:
-        # print("secret key wrong for post request")
-        flask.abort(401)
+    # # abort if the given key is invalid
+    # if hash(secret_key) != SECRET_KEY_HASH:
+    #     # print("secret key wrong for post request")
+    #     flask.abort(401)
 
     # convert dictionary data to a reading object
     new_reading_obj = reading_schema.load(new_reading_data, session=session)
@@ -273,10 +273,10 @@ def post_data():
 def delete_utility():
     # get secret key form header data and then abort if wrong key
     data_header = flask.request.json
-    secret_key = data_header["secret_key"]
+    # secret_key = data_header["secret_key"]
 
-    if hash(secret_key) != SECRET_KEY_HASH:
-        flask.abort(401)
+    # if hash(secret_key) != SECRET_KEY_HASH:
+    #     flask.abort(401)
 
     # delete all readings from the database
     session.query(Reading).delete()
@@ -289,11 +289,11 @@ def delete_utility():
 def delete_before_date_utility():
     # ensure valid secret key
     data_header = flask.request.json
-    secret_key = data_header["secret_key"]
     date: str = data_header["date"]
+    # secret_key = data_header["secret_key"]
 
-    if hash(secret_key) != SECRET_KEY_HASH:
-        flask.abort(401)
+    # if hash(secret_key) != SECRET_KEY_HASH:
+    #     flask.abort(401)
     
     # convert given date to datetime
     date: datetime = datetime.strptime(date, DATE_TIME_FORMAT)
@@ -315,11 +315,11 @@ def delete_before_date_utility():
 def server_log_utility():
     # check key
     data_header = flask.request.json
-    secret_key = data_header["secret_key"]
+    # secret_key = data_header["secret_key"]
     
-    if hash(secret_key) != SECRET_KEY_HASH:
-        # print("secret key wrong for post request")
-        flask.abort(401)
+    # if hash(secret_key) != SECRET_KEY_HASH:
+    #     # print("secret key wrong for post request")
+    #     flask.abort(401)
     
     # sent log file
     return flask.send_file(
@@ -332,13 +332,13 @@ def server_log_utility():
 def load_many_utility():
     # get data from header
     data_header = flask.request.json
-    secret_key = data_header["secret_key"]
     new_data_items = data_header["new_data_items"]
+    # secret_key = data_header["secret_key"]
     
-    # check secret key
-    if hash(secret_key) != SECRET_KEY_HASH:
-        # print("secret key wrong for post request")
-        flask.abort(401)
+    # # check secret key
+    # if hash(secret_key) != SECRET_KEY_HASH:
+    #     # print("secret key wrong for post request")
+    #     flask.abort(401)
     
     # use schema to deserialize
     new_reading_objs = reading_schema_many.load(new_data_items, session=session)
@@ -364,11 +364,11 @@ def load_many_utility():
 def dump_all_utility():
     # check key
     data_header = flask.request.json
-    secret_key = data_header["secret_key"]
+    # secret_key = data_header["secret_key"]
     
-    if hash(secret_key) != SECRET_KEY_HASH:
-        # print("secret key wrong for post request")
-        flask.abort(401)
+    # if hash(secret_key) != SECRET_KEY_HASH:
+    #     # print("secret key wrong for post request")
+    #     flask.abort(401)
     
     # select all query
     stmt = sqla.select(Reading)
