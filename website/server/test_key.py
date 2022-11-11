@@ -32,10 +32,11 @@ def hash(plain_txt):
 # local hash
 with open("hashed_key.key", "r") as file:
     hashed_key = file.read()
-hashed_key.replace("\n", "")
+# hashed_key.replace(chr(10), "").replace(" ", "").replace(chr(13), "")
+hashed_key = hashed_key[:-1]
 
-print(hashed_key)
+print(f"'{hashed_key}'")
 
 
-print(hash("GqFpIvxfUt6Ku8CmtLVmdRzlS"))
+print(f"'{hash(f'GqFpIvxfUt6Ku8CmtLVmdRzlS')}'")
 assert hash("GqFpIvxfUt6Ku8CmtLVmdRzlS") == hashed_key
