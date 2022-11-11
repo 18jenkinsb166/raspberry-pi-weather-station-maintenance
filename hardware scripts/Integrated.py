@@ -57,7 +57,8 @@ def send_reading(pressure, temperature, humidity, wind_speed, wind_direction, pr
 	}
 	loggerBack.info(f"data about to be sent in post request:   {readingData}")
 
-	payload = {"secret_key": SECRET_KEY, "new_data_item": readingData} 
+	#payload = {"secret_key": SECRET_KEY, "new_data_item": readingData} 
+	payload = {"new_data_item": readingData} 
 
 	# Tries to send data to server
 	try:
