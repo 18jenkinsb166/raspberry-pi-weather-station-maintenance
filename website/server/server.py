@@ -37,7 +37,10 @@ LAST_X_DAYS = 21
 # read key file for hashed key  
 lgr.info('setup: reading hashed key file')
 with open('./server/hashed_key.key', 'r') as file:
-    SECRET_KEY_HASH = file.read()
+    # SECRET_KEY_HASH = file.read()
+    # get rid on new line char at end
+    SECRET_KEY_HASH = file.read()[:-1]
+    
 
 lgr.info('setup: reading image path lookup file')
 # image paths lookup
