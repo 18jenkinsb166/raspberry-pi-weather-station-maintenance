@@ -26,14 +26,14 @@ loggerBack = logging.getLogger(os.path.basename(__file__) + " - Backend Logger")
 #Server setup
 SERVER_URL = 'http://172.20.47.242:80/data' # Change to match /data endpoint of URL
 
-#Reads secret key
-with open("secret_key.key", "r") as file:
-	SECRET_KEY = file.read()
+# #Reads secret key
+# with open("secret_key.key", "r") as file:
+# 	SECRET_KEY = file.read()
 
-#Confirm setup of server was successful
-output_safe_secret_key = SECRET_KEY[:4] + "*"*(len(SECRET_KEY)-8) + SECRET_KEY[-4:]
-loggerBack.info(f"using secret key:   {output_safe_secret_key}")
-loggerBack.info(f"using server url:   {SERVER_URL}")
+# #Confirm setup of server was successful
+# output_safe_secret_key = SECRET_KEY[:4] + "*"*(len(SECRET_KEY)-8) + SECRET_KEY[-4:]
+# loggerBack.info(f"using secret key:   {output_safe_secret_key}")
+# loggerBack.info(f"using server url:   {SERVER_URL}")
 
 #Ensures all values have been calculated as floats (i.e. all valid) - if not defaults to 0
 def floatCheck(checkMe):
@@ -57,7 +57,6 @@ def send_reading(pressure, temperature, humidity, wind_speed, wind_direction, pr
 	}
 	loggerBack.info(f"data about to be sent in post request:   {readingData}")
 
-	#payload = {"secret_key": SECRET_KEY, "new_data_item": readingData} 
 	payload = {"new_data_item": readingData} 
 
 	# Tries to send data to server
