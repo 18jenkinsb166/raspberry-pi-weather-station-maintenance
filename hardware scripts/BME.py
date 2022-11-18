@@ -12,7 +12,7 @@ def main():
 	bus = SMBus(1)
 	bme280 = BME280(i2c_dev=bus)
 	for i in range(3): # Takes a couple of readings to 'warm up' (otherwise invalid readings collected)
-		temperature = bme280.get_temperature()
+		temperature = bme280.get_temperature() - 5
 		pressure = bme280.get_pressure()
 		humidity = bme280.get_humidity()
 		time.sleep(1)
