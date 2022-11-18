@@ -89,7 +89,7 @@ loggerSens.info(f"Rainfall reading:   {rainVol}")
 loggerSens.info(f"Taking wind speed reading...")
 windSpeed = Ann.main()
 windSpeed = floatCheck(windSpeed)
-loggerSens.info(f"Wind speed reading:   {rainVol}")
+loggerSens.info(f"Wind speed reading:   {windSpeed}")
 
 loggerSens.info(f"Taking BME readings...")
 temp, press, humid = BME.main()
