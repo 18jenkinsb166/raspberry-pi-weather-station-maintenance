@@ -265,6 +265,9 @@ async function get_all_json_data() {
     // in built function in javascipt that requests the data 
     let response = await fetch("/data");
     let data = response.json()
+    if(length(data) == 0){
+        alert("Some parts cannot be loaded as database contains no recent data (/data returned empty)")
+    }
     return data;
 }
 
