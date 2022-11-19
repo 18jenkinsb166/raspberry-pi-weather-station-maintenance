@@ -265,7 +265,7 @@ async function get_all_json_data() {
     // in built function in javascipt that requests the data 
     let response = await fetch("/data");
     let data = response.json()
-    if(length(data) == 0){
+    if(data.length == 0){
         alert("Some parts cannot be loaded as database contains no recent data (/data returned empty)")
     }
     return data;
@@ -433,50 +433,20 @@ function connectingButton(boolConnected) {
 }
 
 // this function basically compares the most recent data stamp to the current date and time 
-function isConnected(recentTimeStamp) {
-
+function isConnected(mostRecentTimeStamp) {
 
     // currentTimeStamp = yyyy-mm-dd hh:mm:ss eg
-    let today = new Date();
+    now = new Date()
+    // Date.parse puts it in terms of ms since 1970 (general format) which is fed to the constructor
+    then = new Date(Date.parse(mostRecentTimeStamp))
+    // absolute diff in ms
+    diff = now.getTime() - then.getTime()
+    // 1000*7 ms in 7 min (added 2 min buffer)
+    connected = diff <= 7000
 
-    let currentHours = today.getHours(); // 0 - 24 
-    let currentDay = today.getDate(); // 1 - 31
-    let currentMonth = parseInt(today.getMonth()) + 1; // 1 - 12
-    let currentYear = today.getFullYear(); // 2022
-
-
-
-
-    let timeStamp = recentTimeStamp.split(/\s+/)
-    let timeStampTime = timeStamp[1] // splits by a whitespace, in form hh:mm:ss
-    let timeStampYearMonthDay = timeStamp[0].split("-"); // splits in yyyy, mm, dd
-    let timeStampHours = timeStampTime.split(':')[0]
-
-    let timeStampYear = timeStampYearMonthDay[0];
-    let timeStampMonth = timeStampYearMonthDay[1];
-    let timeStampDay = timeStampYearMonthDay[2];
-
-    let returnVal = true;
-
-    if (currentYear != timeStampYear) { // compares years 
-        returnVal = false;
-
-    }
-    if (currentMonth != timeStampMonth) { // compares months
-        returnVal = false;
-
-    }
-    if (currentDay != timeStampDay) {
-        returnVal = false;
-
-    }
-    if (currentHours < (parseInt(timeStampHours) + parseInt(timeBeforeInactive)) % 24) { // compares hours
-        returnVal = false
-    }
-
-
-    return returnVal;
+    return connected
 }
+
 
 // checks the current size of the page and then adds the styles to all the elemnts to hide everything, and only show the error message 
 function resizeFunc() {
