@@ -441,8 +441,8 @@ function isConnected(mostRecentTimeStamp) {
     then = new Date(Date.parse(mostRecentTimeStamp))
     // absolute diff in ms
     diff = now.getTime() - then.getTime()
-    // 1000*7 ms in 7 min (added 2 min buffer)
-    connected = diff <= 7000
+    // 1000*60*7 ms in 7 min (added 2 min buffer)
+    connected = diff <= 420000
 
     return connected
 }
