@@ -272,7 +272,7 @@ def post_data():
 @print_dec
 def delete_utility():
     # get secret key form header data and then abort if wrong key
-    data_header = flask.request.json
+    # data_header = flask.request.json
     # secret_key = data_header["secret_key"]
 
     # if hash(secret_key) != SECRET_KEY_HASH:

@@ -438,7 +438,12 @@ function isConnected(mostRecentTimeStamp) {
     // currentTimeStamp = yyyy-mm-dd hh:mm:ss eg
     now = new Date()
     // Date.parse puts it in terms of ms since 1970 (general format) which is fed to the constructor
-    then = new Date(Date.parse(mostRecentTimeStamp))
+    // https://stackoverflow.com/questions/4310953/invalid-date-in-safari
+    then = new Date(
+        Date.parse(
+            mostRecentTimeStamp.replace(/ /g, "T")
+        )
+    )
     // absolute diff in ms
     diff = now.getTime() - then.getTime()
     // 1000*60*7 ms in 7 min (added 2 min buffer)
