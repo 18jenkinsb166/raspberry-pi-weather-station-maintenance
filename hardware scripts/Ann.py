@@ -63,5 +63,3 @@ def main(): # Takes given no. of readings and finds average
 	average = total / noReadings # Calculates average of readings
 
 	return average
-
-print(main())
