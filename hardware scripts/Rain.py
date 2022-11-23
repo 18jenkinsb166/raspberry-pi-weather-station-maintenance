@@ -1,12 +1,14 @@
 from gpiozero import Button
 from datetime import datetime, timedelta
 import time
+
 # import csv to store an array of timestamps of bucket tip events
 import csv
 from typing import Iterable
 
 # removed comma
 DATE_FORMAT = "%d/%m/%Y %H:%M:%S"
+
 # Volume of water needed to tip rain gague
 BUCKET_SIZE = 0.2794
 
@@ -36,13 +38,14 @@ def returnTips():  # sourcery skip: inline-immediately-yielded-variable
 				yield time
 
 	tips: Iterable[datetime] = generate_tip_timestamps()
+
 	# filter where function true
 	tips_in_last_day: list[datetime] = list(filter(
 		lambda then: time_difference_less_than_day(now, then),
 		tips
 	))
 	num_tips_in_last_day: int = len(tips_in_last_day)
-	# print(list(tips_in_last_day))
+	
 	# turn each tip into a single element array to show a row
 	rows: list[str] = list(map(
 		lambda tip: [tip.strftime(DATE_FORMAT)],

@@ -19,3 +19,4 @@ def main():
 		time.sleep(1)
 
 	return temperature, pressure, humidity
+	
