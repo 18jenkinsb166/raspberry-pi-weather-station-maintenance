@@ -8,14 +8,14 @@ def bucketTipped():
 	dtNow = datetime.datetime.now()
 	appendMe = dtNow.strftime("%d/%m/%Y, %H:%M:%S")
 
-	rainFile = open("rainTimesAll.txt", "a") #Opens file to record all rain tips in
+	rainFile = open("/home/pi/Documents/Integrated Sensors/rainTimesAll.txt", "a") #Opens file to record all rain tips in
 	rainFile.write(appendMe + "\n") #Appends curent time to rain tips file
 	rainFile.close()
 
 #Removes bucket tips from previous day
 def cleanRainfall(dateNow):
 	#Opens the file containing all times of tips, and reads each line
-	rainFile = open("rainTimesAll.txt", "r")
+	rainFile = open("/home/pi/Documents/Integrated Sensors/rainTimesAll.txt", "r")
 	rainTimes = rainFile.readlines()
 	rainFile.close()
 
@@ -32,7 +32,7 @@ def cleanRainfall(dateNow):
 				validTimes.append(time)
 
 		#Writes all valid times to text file, overwriting previously stored tip times
-		recentRainFile = open("rainTimesAll.txt", "w")
+		recentRainFile = open("/home/pi/Documents/Integrated Sensors/rainTimesAll.txt", "w")
 		for times in validTimes:
 			recentRainFile.write(times)
 		recentRainFile.close()
