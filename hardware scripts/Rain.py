@@ -1,6 +1,6 @@
 from gpiozero import Button
 from datetime import datetime, timedelta
-from time import time.sleep()
+from time import time, sleep
 # import csv to store an array of timestamps of bucket tip events
 import csv
 from typing import Iterable
@@ -82,5 +82,5 @@ def main():
 	startTime = time()
 	# wait until time elapsed
 	while time() - startTime < ((5 * 60) - 52): #Change RHS for time between readings - minus 52 to account for time taking other readings
-		time.sleep(10)
+		sleep(10)
 	return returnTips()
