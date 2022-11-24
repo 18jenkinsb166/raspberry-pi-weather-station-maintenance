@@ -15,7 +15,7 @@ BUCKET_SIZE = 0.2794
 #Records Bucket Tip
 def bucketTipped():
 	now_timestamp: str = datetime.now().strftime(DATE_FORMAT)
-	with open("rain_tip_times.csv", "a", newline="") as csv_file:
+	with open("/home/pi/Documents/Integrated Sensors/rain_tip_times.csv", "a", newline="") as csv_file:
 		csv_writer = csv.writer(csv_file, delimiter=",")
 		csv_writer.writerow([now_timestamp])
 
@@ -29,7 +29,7 @@ def returnTips():  # sourcery skip: inline-immediately-yielded-variable
 	now: datetime = datetime.now()
 
 	def generate_tip_timestamps():
-		with open("rain_tip_times.csv", "r") as csv_file:
+		with open("/home/pi/Documents/Integrated Sensors/rain_tip_times.csv", "r") as csv_file:
 			# csv_reader is an iterable of rows
 			csv_reader = csv.reader(csv_file, delimiter=',')
 			for row in csv_reader:
@@ -53,7 +53,7 @@ def returnTips():  # sourcery skip: inline-immediately-yielded-variable
 	))
 
 	# overwrite csv with new filtered tips
-	with open("rain_tip_times.csv", "w", newline="") as csv_file:
+	with open("/home/pi/Documents/Integrated Sensors/rain_tip_times.csv", "w", newline="") as csv_file:
 		csv_writer = csv.writer(csv_file, delimiter=",")
 		csv_writer.writerows(rows)
 
