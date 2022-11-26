@@ -1,0 +1,20 @@
+2022-11-26 13:14:55,430 - server - INFO - this logger named server created
+2022-11-26 13:14:55,430 - server - INFO - setup: defining constants
+2022-11-26 13:14:55,430 - server - INFO - setup: reading image path lookup file
+2022-11-26 13:14:55,438 - server - INFO - setting up flask app
+2022-11-26 13:14:55,454 - server - INFO - setting up sqlalchemy engine
+2022-11-26 13:14:55,582 - server - INFO - defining reading class to represent a row in the readings table
+2022-11-26 13:14:55,598 - server - INFO - creating all tables if not already exists
+2022-11-26 13:14:55,622 - server - INFO - define sql index on timestamp to improve read times by timestamp
+2022-11-26 13:14:55,638 - server - INFO - defining schema for reading to allow for validation and serialization
+2022-11-26 13:14:55,742 - server - INFO - setting up instances of the schema for serializing readings
+2022-11-26 13:14:55,742 - server - INFO - defining utility functions
+2022-11-26 13:14:55,742 - server - INFO - defining functions to handle routes / endpoints
+2022-11-26 13:14:55,750 - server - INFO - binding route handlers to respective route
+2022-11-26 13:14:55,814 - server - INFO - defining safe method for running app
+2022-11-26 13:14:56,054 - server - DEBUG - Beginning execution of function:   index
+2022-11-26 13:14:56,166 - server - DEBUG - Finished execution of function:   index
+2022-11-26 13:14:56,166 - server - DEBUG -  function index returned:   <!DOCTYPE html> <html lang="en">  <head>     <meta charset="UTF-8">     <meta name="viewport" content="width=device-width, initial-scale=1.0">     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+2022-11-26 13:14:58,582 - server - DEBUG - Beginning execution of function:   get_data
+2022-11-26 13:14:58,630 - server - DEBUG - Finished execution of function:   get_data
+2022-11-26 13:14:58,670 - server - DEBUG -  function get_data returned:   <Response 3 bytes [200 OK]>
