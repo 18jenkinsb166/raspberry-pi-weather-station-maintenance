@@ -21,8 +21,7 @@ def bucketTipped():
 
 
 def time_difference_less_than_day(now: datetime, then: datetime):
-	difference: timedelta = now - then
-	return difference.days < 1
+	return (now.date() == then.date()) # Checks two times are from the same day
 
 #Returns volume of rain in given period of time
 def returnTips():  # sourcery skip: inline-immediately-yielded-variable
