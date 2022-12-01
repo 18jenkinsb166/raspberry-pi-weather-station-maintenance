@@ -135,13 +135,11 @@
                         <button class="drop-button-big-graph" id="humid-button-big-graph">Humidity</button>
                     </div>
                 </div>
+
+                <a href="{{ url_for('csv_data') }}" class="download-csv-wrapper">
+                    <button class="download-csv-button">Download Data</button>
+                </a>
             </div>
-
-            <!-- here you go George -->
-            <a href="{{ url_for('csv_data') }}">
-                <button class="download-csv">Download Data</button>
-            </a>
-
         </div>
     </section>
 
