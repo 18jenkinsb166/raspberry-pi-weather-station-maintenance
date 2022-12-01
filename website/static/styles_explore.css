@@ -169,8 +169,9 @@ input[type=range]::-webkit-slider-runnable-track {
 @media (min-width: 600px) {
     .container-detailed-graph-section {
         display: grid;
-        grid-template-areas: "graph dropdown" "slider download";
+        grid-template-areas: "graph dropdown" "slider dropdown";
         grid-auto-columns: 75% 25%;
+        grid-auto-columns: minmax(0, fr);
         /* padding: 1.5em 10% 0 10%; */
         margin: auto;
     }
@@ -258,58 +259,46 @@ canvas {
 
 
 /* CSS */
-.download-csv-wrapper {
-    grid-area: download;
 
-    margin-right: var(--margin-right);
-    
-    width: 100%;
-}
-.download-csv-button {
-    margin: 0 500px 0 500px;
-
+.download-csv {
+    float: right;
+    margin-right: calc(var(--margin-right));
+    transform: translate(-4em, -7em);
     background-color: #9fa1a2;
     border: 1px solid transparent;
     border-radius: 3px;
-    
     box-shadow: rgba(255, 255, 255, .4) 0 1px 0 0 inset;
     box-sizing: border-box;
-    
     color: #fff;
-    
     cursor: pointer;
-    
     font-family: -apple-system, system-ui, "Segoe UI", "Liberation Sans", sans-serif;
     font-size: 1em;
     font-weight: 400;
     outline: none;
-    
     text-align: center;
-    text-decoration: none;
-
     touch-action: manipulation;
-
     white-space: nowrap;
-    
     padding: 0.5em 1em 0.5em 1em;
+    margin-left: 2em;
+    margin-top: 2em;
 }
 
-.download-csv-button:hover,
-.download-csv-button:focus {
+.download-csv:hover,
+.download-csv:focus {
     background-color: rgb(104, 105, 106);
 }
 
-.download-csv-button:focus {
+.download-csv:focus {
     box-shadow: 0 0 0 4px rgb(104, 105, 106);
 }
 
-.download-csv-button:active {
+.download-csv:active {
     background-color: #0064bd;
     box-shadow: none;
 }
 
 @media (max-width: 750px) {
-    .download-csv-button {
+    .download-csv {
         font-size: 0.8em;
     }
 }
