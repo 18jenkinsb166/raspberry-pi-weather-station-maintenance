@@ -37,16 +37,18 @@
     display: grid;
     grid-gap: 0.4em;
     grid-template-areas: "img1 text1 text1" "quotes quotes img2";
-    font-size: var(--text-fs)
+    font-size: var(--text-fs);
+
+    width: 100%;
 }
 
-@media (max-width: 1089px) {
+@media (max-width: 1170px) {
     .about-us-contents {
-        font-size: 1.2em;
+        font-size: 1.3em;
     }
 }
 
-@media (max-width: 875px) {
+@media (max-width: 940px) {
     .about-us-contents {
         font-size: 1em;
     }
