@@ -13,7 +13,7 @@ def main():
 	bme280 = BME280(i2c_dev=bus)
 	for i in range(3): # Takes a couple of readings to 'warm up' (otherwise invalid readings collected)
 		# Collects readings and applies appropraite callibration
-		temperature = bme280.get_temperature() - 5
+		temperature = bme280.get_temperature() - 3
 		pressure = bme280.get_pressure() + 10
 		humidity = bme280.get_humidity() + 10
 		time.sleep(1)
